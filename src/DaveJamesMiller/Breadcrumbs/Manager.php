@@ -103,6 +103,17 @@ class Manager
     public function renderArray($name, $params = array())
     {
         $breadcrumbs = $this->generateArray($name, $params);
+        
+        $valid_view = false;
+            
+        if (is_string($this->view)) {
+            if (strlen($this->view) > 0) {
+                $valid_view = true;
+            }   
+        }   
+
+        if (!$valid_view) 
+            $this->setView(\Config::get('laravel-breadcrumbs::config.view'));
 
         return $this->factory->make($this->view, compact('breadcrumbs'))->render();
     }
